@@ -38,11 +38,10 @@ Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.
 
 // invoice 
 Route::post('/invoices/{id}/update-status', [InvoiceController::class,'updateStatus'])->name('invoices.update-status');
+Route::get('/order-confirm',[AuthController::class,'ConfirmOrder'])->name('order-confirm');
 
 });
 
-
-Route::get('/order-confirm',[AuthController::class,'ConfirmOrder'])->name('order-confirm');
 Route::get('/',[HomeController::class,'index'])->name('home.index');
 Route::get('/product-details/{id}',[HomeController::class,'showProduct'])->name('product.show');
 Route::get('/CheckoutPage',[HomeController::class,'CheckoutPage'])->name('product.checkout');
@@ -52,7 +51,9 @@ Route::post('/addToChart',[ProductCartController::class,'addToChart'])->name('ad
 Route::post('/update-quantity', [ProductCartController::class, 'updateQuantity'])->name('update-quantity');
 Route::delete('/delete/item', [ProductCartController::class,'deleteItem'])->name('delete.item');
 Route::post('/placeOrder', [InvoiceController::class,'create'])->name('placeOrder');
-Route::post('/mobile_verification', [InvoiceController::class,'verifyOtp'])->name('verify.otp');
+
+
+// Route::post('/mobile_verification', [InvoiceController::class,'verifyOtp'])->name('verify.otp'); // FOR OTP
 
 // Login 
 Route::get('/admin-login',[AuthController::class,'index'])->name('admin.login');

@@ -70,8 +70,8 @@
 
             <div class="mb-5">
 
-                {{-- <form action="{{ route('placeOrder') }}" method="POST" class="bg-white p-4 rounded"> --}}
-                <form method="POST" class="bg-white p-4 rounded" id="OrderForm">
+                <form action="{{ route('placeOrder') }}" method="POST" class="bg-white p-4 rounded">
+                <!-- FOR OTP <form method="POST" class="bg-white p-4 rounded" id="OrderForm"> === FOR OTP -->
                     @csrf
                     {{-- Name --}}
                     <div class="form-group mt-3">
@@ -124,7 +124,8 @@
                         </div>
                     </div>
 
-                    <button type="button" class=" mt-2 btn btn-primary btn-block" id="orderBtn"><strong>অর্ডার কনর্ফাম করুন</strong></button>
+                    <!-- <button type="button" class=" mt-2 btn btn-primary btn-block" id="orderBtn"><strong>অর্ডার কনর্ফাম করুন</strong></button> ==============FOR OTP ============-->
+                    <button type="submit" class=" mt-2 btn btn-primary btn-block" id="orderBtn">অর্ডার কনর্ফাম করুন</button>
                 </form>
             </div>
         </div>
@@ -323,6 +324,9 @@
     }
 
 </script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 <script>
     $(document).ready(function () {
         var form = $("#quantityForm");
@@ -351,215 +355,215 @@
     });
 </script>
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-<script>
- $(document).ready(function(){
+<script> // FOR OTP
+    // $(document).ready(function(){
 
-    var resend = null;
-    var timeout =  null;
+    //         var resend = null;
+    //         var timeout =  null;
 
-    // AJAX
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    //         // AJAX
+    //         $.ajaxSetup({
+    //             headers: {
+    //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //             }
+    //         });
 
-    // SEND OTP TO THE CUSTOMER
-    $(document).on("click", "#orderBtn", function(event){
-        event.preventDefault();
+    //         // SEND OTP TO THE CUSTOMER
+            
+    //         $(document).on("click", "#orderBtn", function(event){
+    //             event.preventDefault();
 
-        $.ajax({
-            url: "/placeOrder",
-            type: "POST",
-            data: $('#OrderForm').serialize(),
-            dataType: "JSON",
-            success: function(response){
+    //             $.ajax({
+    //                 url: "/placeOrder",
+    //                 type: "POST",
+    //                 data: $('#OrderForm').serialize(),
+    //                 dataType: "JSON",
+    //                 success: function(response){
 
-                if(response.response.code_sent){
-                    $('#reg_code_sent').text(response.response.code_sent);
-                    $('#reg_code_invalid').text(null);
-                }else{
-                    $('#reg_code_sent').text(null);
-                }
+    //                     if(response.response.code_sent){
+    //                         $('#reg_code_sent').text(response.response.code_sent);
+    //                         $('#reg_code_invalid').text(null);
+    //                     }else{
+    //                         $('#reg_code_sent').text(null);
+    //                     }
 
-                clearInterval(resend);
-                clearTimeout(timeout);
+    //                     clearInterval(resend);
+    //                     clearTimeout(timeout);
 
-                $('#reg_verify').show();
-                $('#reg_resend').show();
-                $('#reg_otp-modal').modal({  backdrop: 'static'});
-                $('#reg_otp-modal').modal('show');
+    //                     $('#reg_verify').show();
+    //                     $('#reg_resend').show();
+    //                     $('#reg_otp-modal').modal({  backdrop: 'static'});
+    //                     $('#reg_otp-modal').modal('show');
 
-                $('#reg_resend').prop("disabled",true);
-                var i = 60;
-                resend = setInterval(function() {
-                    $('.reg_timer').text(`in ${--i} sec`)
-                },1000);
-                // enable resend btn
-                timeout = setTimeout(function(){ $('#reg_resend').prop("disabled",false);
-                    clearInterval(resend);
-                    $('.reg_timer').text(null);
-                    $('#sending_error').text(null);
-                    $('#sending_error').parent().hide();
-                }, 60000);
-            },
-            error: function(error){
-                
-                if(error.responseJSON.message == "CSRF token mismatch."){
-                    // refresh csrf token
-                    $.ajax({
-                            url: '/csrf-token',
-                            type:'GET',
-                        }).done(function (response) {
-                            $('#token').val(response.token).trigger('change');
-                            console.log( $('#token').val())
-                            $('#orderBtn').trigger('click');             
-                        }).fail(function (error){
-                            window.location.reload();                   
-                    }); 
-                }
-                
-                // Validation Error For Name
-                if( error.responseJSON.error.name && error.responseJSON.error.name.length > 0){
-                    $('#name').addClass('is-invalid');
-                    $('#name').css({ 'margin-bottom' : '0' });
-                    $('#name_error').text(error.responseJSON.error.name['0']);
-                    $('#name_error').show();
-                }
-                else {
-                    $('#name').removeClass('is-invalid');
-                    $('#name_error').text(null);
-                    $('#name_error').hide();
-                }
-                
-                // Validation Error For Mobile
-                if( error.responseJSON.error.mobile && error.responseJSON.error.mobile.length > 0){
-                    $('#mobile').addClass('is-invalid');
-                    $('#mobile').css({ 'margin-bottom' : '0' });
-                    $('#mobile_error').text(error.responseJSON.error.mobile['0']);
-                    $('#mobile_error').show();
-                }
-                else {
-                    $('#mobile').removeClass('is-invalid');
-                    $('#mobile_error').text(null);
-                    $('#mobile_error').hide();
-                }
-                
-                // Validation Error For Location
-                if( error.responseJSON.error.location && error.responseJSON.error.location.length > 0){
-                    $('#location').addClass('is-invalid');
-                    $('#location').css({ 'margin-bottom' : '0' });
-                    $('#location_error').text(error.responseJSON.error.location['0']);
-                    $('#location_error').show();
-                }
-                else {
-                    $('#location').removeClass('is-invalid');
-                    $('#location_error').text(null);
-                    $('#location_error').hide();
-                }
-                
-                // Validation Error For Address
-                if( error.responseJSON.error.address && error.responseJSON.error.address.length > 0){
-                    $('#address').addClass('is-invalid');
-                    $('#address').css({ 'margin-bottom' : '0' });
-                    $('#address_error').text(error.responseJSON.error.address['0']);
-                    $('#address_error').show();
-                }
-                else {
-                    $('#address').removeClass('is-invalid');
-                    $('#address_error').text(null);
-                    $('#address_error').hide();
-                }
-                
-                // verification code sending error
-                if(error.responseJSON.error.sending_error){
-                    $('#sending_error').text(error.responseJSON.error.sending_error);
-                    $('#sending_error').parent().show();
-                }
-                else{
-                    $('#sending_error').text(null);
-                    $('#sending_error').parent().hide();
-                }
-    
-                // frequent request error
-                if(error.responseJSON.error.frequent_req){
-                    $('#sending_error').text("Try another request ");
-                    $('#sending_error').parent().show();
-                }
-                else{
-                    $('#sending_error').text(null);
-                    $('#sending_error').parent().hide();
-                }
-            }
-        });
+    //                     $('#reg_resend').prop("disabled",true);
+    //                     var i = 60;
+    //                     resend = setInterval(function() {
+    //                         $('.reg_timer').text(`in ${--i} sec`)
+    //                     },1000);
+    //                     // enable resend btn
+    //                     timeout = setTimeout(function(){ $('#reg_resend').prop("disabled",false);
+    //                         clearInterval(resend);
+    //                         $('.reg_timer').text(null);
+    //                         $('#sending_error').text(null);
+    //                         $('#sending_error').parent().hide();
+    //                     }, 60000);
+    //                 },
+    //                 error: function(error){
+                        
+    //                     if(error.responseJSON.message == "CSRF token mismatch."){
+    //                         // refresh csrf token
+    //                         $.ajax({
+    //                                 url: '/csrf-token',
+    //                                 type:'GET',
+    //                             }).done(function (response) {
+    //                                 $('#token').val(response.token).trigger('change');
+    //                                 console.log( $('#token').val())
+    //                                 $('#orderBtn').trigger('click');             
+    //                             }).fail(function (error){
+    //                                 window.location.reload();                   
+    //                         }); 
+    //                     }
+                        
+    //                     // Validation Error For Name
+    //                     if( error.responseJSON.error.name && error.responseJSON.error.name.length > 0){
+    //                         $('#name').addClass('is-invalid');
+    //                         $('#name').css({ 'margin-bottom' : '0' });
+    //                         $('#name_error').text(error.responseJSON.error.name['0']);
+    //                         $('#name_error').show();
+    //                     }
+    //                     else {
+    //                         $('#name').removeClass('is-invalid');
+    //                         $('#name_error').text(null);
+    //                         $('#name_error').hide();
+    //                     }
+                        
+    //                     // Validation Error For Mobile
+    //                     if( error.responseJSON.error.mobile && error.responseJSON.error.mobile.length > 0){
+    //                         $('#mobile').addClass('is-invalid');
+    //                         $('#mobile').css({ 'margin-bottom' : '0' });
+    //                         $('#mobile_error').text(error.responseJSON.error.mobile['0']);
+    //                         $('#mobile_error').show();
+    //                     }
+    //                     else {
+    //                         $('#mobile').removeClass('is-invalid');
+    //                         $('#mobile_error').text(null);
+    //                         $('#mobile_error').hide();
+    //                     }
+                        
+    //                     // Validation Error For Location
+    //                     if( error.responseJSON.error.location && error.responseJSON.error.location.length > 0){
+    //                         $('#location').addClass('is-invalid');
+    //                         $('#location').css({ 'margin-bottom' : '0' });
+    //                         $('#location_error').text(error.responseJSON.error.location['0']);
+    //                         $('#location_error').show();
+    //                     }
+    //                     else {
+    //                         $('#location').removeClass('is-invalid');
+    //                         $('#location_error').text(null);
+    //                         $('#location_error').hide();
+    //                     }
+                        
+    //                     // Validation Error For Address
+    //                     if( error.responseJSON.error.address && error.responseJSON.error.address.length > 0){
+    //                         $('#address').addClass('is-invalid');
+    //                         $('#address').css({ 'margin-bottom' : '0' });
+    //                         $('#address_error').text(error.responseJSON.error.address['0']);
+    //                         $('#address_error').show();
+    //                     }
+    //                     else {
+    //                         $('#address').removeClass('is-invalid');
+    //                         $('#address_error').text(null);
+    //                         $('#address_error').hide();
+    //                     }
+                        
+    //                     // verification code sending error
+    //                     if(error.responseJSON.error.sending_error){
+    //                         $('#sending_error').text(error.responseJSON.error.sending_error);
+    //                         $('#sending_error').parent().show();
+    //                     }
+    //                     else{
+    //                         $('#sending_error').text(null);
+    //                         $('#sending_error').parent().hide();
+    //                     }
+            
+    //                     // frequent request error
+    //                     if(error.responseJSON.error.frequent_req){
+    //                         $('#sending_error').text("Try another request ");
+    //                         $('#sending_error').parent().show();
+    //                     }
+    //                     else{
+    //                         $('#sending_error').text(null);
+    //                         $('#sending_error').parent().hide();
+    //                     }
+    //                 }
+    //             });
 
-    });
+    //         });
 
-    // VERIFY OTP
-    $(document).on("click","#reg_verify", function(){
-        var otpCode = $("#code").val();
-        $.ajax({
-            url: "mobile_verification",
-            type:'POST',
-            dataType : "JSON",
-            data:{
-                code: otpCode
-            },
-            success: function(response){
-                if(response.response.reg_successful){
-                    // If Number verification done
-                    $('#reg_successful').text(response.response.reg_successful);
-                    $('#reg_otp-modal').modal('hide');
-                }
+    //         // VERIFY OTP
+    //         $(document).on("click","#reg_verify", function(){
+    //             var otpCode = $("#code").val();
+    //             $.ajax({
+    //                 url: "mobile_verification",
+    //                 type:'POST',
+    //                 dataType : "JSON",
+    //                 data:{
+    //                     code: otpCode
+    //                 },
+    //                 success: function(response){
+    //                     if(response.response.reg_successful){
+    //                         // If Number verification done
+    //                         $('#reg_successful').text(response.response.reg_successful);
+    //                         $('#reg_otp-modal').modal('hide');
+    //                     }
 
-                if(response.response.data){
-                    window.location.assign("https://martexbangladesh.com/order-confirm");
-                }
+    //                     if(response.response.data){
+    //                         window.location.assign("https://martexbangladesh.com/order-confirm");
+    //                     }
 
-            },
-            error: function(error){
+    //                 },
+    //                 error: function(error){
 
-                if(error.responseJSON.message == "CSRF token mismatch."){
-                    // refresh csrf token
-                    $.ajax({
-                        url: '/csrf-token',
-                        type:'GET',
-                    }).done(function (response) {
-                        $('#token').val(response.token).trigger('change');
-                        console.log( $('#token').val())
-                        $('#reg_verify').trigger('click');             
-                    }).fail(function (error){
-                        window.location.reload();                   
-                    });              
-                }
-                
-                // if code invalid
-                if(error.responseJSON.error.code_invalid){
-                    $('#reg_code_invalid').text(error.responseJSON.error.code_invalid);
-                    $('#reg_code_sent').text(null);
-                }else {
-                    $('#reg_code_invalid').text(null);
-                }
-                // registration error
-                if(error.responseJSON.error.reg_error){
-                    $('#sending_error').text(error.responseJSON.error.reg_error);
-                    $('#sending_error').parent().show();
-                    // $('#reg_successful').text(null);
-                    // $('#reg_successful').parent().hide();
-                    $('#otp-modal').modal('hide');
-                }
-            }
-        });
-    });
-    
-    // RESEND CODE
-    $('#reg_resend').on('click', function (e) {
-        e.preventDefault();
-        // submit reg form using submit button
-        $('#orderBtn').trigger('click');
-    });
+    //                     if(error.responseJSON.message == "CSRF token mismatch."){
+    //                         // refresh csrf token
+    //                         $.ajax({
+    //                             url: '/csrf-token',
+    //                             type:'GET',
+    //                         }).done(function (response) {
+    //                             $('#token').val(response.token).trigger('change');
+    //                             console.log( $('#token').val())
+    //                             $('#reg_verify').trigger('click');             
+    //                         }).fail(function (error){
+    //                             window.location.reload();                   
+    //                         });              
+    //                     }
+                        
+    //                     // if code invalid
+    //                     if(error.responseJSON.error.code_invalid){
+    //                         $('#reg_code_invalid').text(error.responseJSON.error.code_invalid);
+    //                         $('#reg_code_sent').text(null);
+    //                     }else {
+    //                         $('#reg_code_invalid').text(null);
+    //                     }
+    //                     // registration error
+    //                     if(error.responseJSON.error.reg_error){
+    //                         $('#sending_error').text(error.responseJSON.error.reg_error);
+    //                         $('#sending_error').parent().show();
+    //                         // $('#reg_successful').text(null);
+    //                         // $('#reg_successful').parent().hide();
+    //                         $('#otp-modal').modal('hide');
+    //                     }
+    //                 }
+    //             });
+    //         });
+            
+    //         // RESEND CODE
+    //         $('#reg_resend').on('click', function (e) {
+    //             e.preventDefault();
+    //             // submit reg form using submit button
+    //             $('#orderBtn').trigger('click');
+    //         });
 
-});   
+    // });   
 </script>

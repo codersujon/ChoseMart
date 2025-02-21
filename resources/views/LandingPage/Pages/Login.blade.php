@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Martex Bangladesh</title>
+    <title>Chose Mart - Admin Login</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.ico') }}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="landingPagestyle.css">
@@ -62,7 +62,7 @@
 			margin-top: 100px;
 		}
 		.login_btn {
-			width: 100%;
+			/* width: 100%; */
 			background: #c0392b !important;
 			color: white !important;
 		}

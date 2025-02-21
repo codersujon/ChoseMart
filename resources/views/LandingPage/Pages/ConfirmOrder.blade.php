@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Martex Bangladesh</title>
+    <title>Chose Mart</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="landingPagestyle.css">
     <style>
@@ -104,7 +104,7 @@
                     <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width:600px;">
                         <tr>
                             <td align="center" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 25px;">
-                                <img src="{{ asset('logoinvoice.png') }}" width="125" height="120" style="display: block; border: 0px;" /><br>
+                                <img src="{{ asset('logoinvoice.png') }}" width="180" height="60" style="display: block; border: 0px;" /><br>
                                 <h2 style="font-size: 30px; font-weight: 800; line-height: 36px; color: #333333; margin: 0;">
                                     Thank You For Your Order!
                                 </h2>
@@ -113,7 +113,7 @@
                         <tr>
                             <td align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding-top: 10px;">
                                 <p style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                   Martex Bangladesh is the Best reliable E-Commerce platform in Bangladesh.
+                                    Chose Mart is the Best reliable E-Commerce platform in Bangladesh.
                                 </p>
                             </td>
                         </tr>
@@ -142,14 +142,12 @@
                                         </td>
                                            <td width="75%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px 10px;">
                                             @if($data->location=="insideDhaka")
-                                            <p>60 tk </p>   
+                                            <p>70 tk </p>   
                                             @else
-                                            <p>120 tk</p>
+                                            <p>130 tk</p>
                                             @endif
-                                            
                                          
                                           </td>
-                                      
                                     </tr>
                                   
                                  
@@ -165,9 +163,9 @@
                                         </td>
                                         <td width="25%" align="left" style="font-family: Open Sans, Helvetica, Arial, sans-serif; font-size: 16px; font-weight: 800; line-height: 24px; padding: 10px; border-top: 3px solid #eeeeee; border-bottom: 3px solid #eeeeee;">
                                            @if($data->location=="insideDhaka")
-                                            <p> {{$data->total_price + 60 }} TK  </p>   
+                                            <p> {{$data->total_price + 70 }} TK  </p>   
                                             @else
-                                             <p>  {{$data->total_price + 120 }}  TK </p>
+                                             <p>  {{$data->total_price + 130 }}  TK </p>
                                             @endif
     
                                         </td>
@@ -217,7 +215,6 @@
                                                        echo $sevenDaysLater->format('d-m-Y H:i:s') . "\n";
 
                                                         ?>
-
 
 
                                                 </p>

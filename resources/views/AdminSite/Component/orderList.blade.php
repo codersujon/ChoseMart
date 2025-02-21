@@ -74,9 +74,9 @@
                           </td>
                            <td>
                               @if($invoice->location=="insideDhaka")
-                                  <p class="fw-normal mb-1">{{$invoice->total_price + 60}} TK </p>
+                                  <p class="fw-normal mb-1">{{$invoice->total_price + 70}} TK </p>
                               @else
-                                 <p class="fw-normal mb-1">{{$invoice->total_price + 120 }} TK</p>
+                                 <p class="fw-normal mb-1">{{$invoice->total_price + 130 }} TK</p>
                               @endif
                           </td>
                           

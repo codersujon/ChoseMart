@@ -55,7 +55,7 @@
                         <h5>
                             আমাদের ওয়েভসাইট ভিজিট করুন :
                         </h5>
-                        <a href="https://martexbangladesh.com/"> Chose Mart</a>
+                        <a href="https://chosemart.com/"> Chose Mart</a>
                     </div>
                     <div class="d-flex col-lg-10 offset-lg-1 mt-3 justify-content-center">
                         <!--<h5>-->

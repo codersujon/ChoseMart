@@ -30,16 +30,16 @@
         <td>  <p class="fw-normal mb-1"> {{$invoice->total_price}} </p> </td>
          <td>  
         @if($invoice->location=="insideDhaka")
-           <p class="fw-normal mb-1"> 60 Tk </p> 
+           <p class="fw-normal mb-1"> 70 Tk </p> 
         @else
-           <p class="fw-normal mb-1"> 120 TK  </p>
+           <p class="fw-normal mb-1"> 130 TK  </p>
         @endif
         </td>
         <td>  
         @if($invoice->location=="insideDhaka")
-           <p class="fw-normal mb-1"> {{$invoice->total_price + 60 }} Tk </p> 
+           <p class="fw-normal mb-1"> {{$invoice->total_price + 70 }} Tk </p> 
         @else
-           <p class="fw-normal mb-1"> {{$invoice->total_price + 120 }} TK  </p>
+           <p class="fw-normal mb-1"> {{$invoice->total_price + 130 }} TK  </p>
         @endif
         </td>
         
